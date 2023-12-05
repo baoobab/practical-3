@@ -18,6 +18,12 @@ void matrixPrint(int *arr, const int N) {
     cout << "\n\n";
 }
 
+void matrixFill(int *arr, const int N, int number = 0) {
+    for (int *next = arr, *prev = arr, *end = arr + N * N - 1; next <= end; next++) {
+        *next = number;
+    }    
+}
+
 
 int main() {
     setlocale(LC_ALL, "Russian");
@@ -44,6 +50,7 @@ int main() {
         {   
             case 1: {
                 cout << "1.A)\n";
+                matrixFill(arr, N); // clear the matrix (for better visibility of the algorithm)
 
                 int cnt = 1;
                 int k = 1;
@@ -92,6 +99,36 @@ int main() {
                 }
 
                 cout << "\n" << "1.B)" << "\n";
+                matrixFill(arr, N); // clear the matrix (for better visibility of the algorithm)
+
+                cnt = 1;
+                k = 0;
+
+                int *upBorder = &arr[k]; 
+                int *downBorder = &arr[N * N - N + k];
+
+                while (cnt <= N * N) {
+                    for (int *next = upBorder + k, *end = downBorder + k; next <= end; next += N) {
+                        // *next = getRandomValueFromRange(1, arrSize);
+                        *next = cnt;
+                        cnt++;
+                    } 
+                    matrixPrint(arr, N);
+                    Sleep(1000);
+
+                    k++;
+
+                    for (int *next = downBorder + k, *end = upBorder + k; next >= end; next -= N) {
+                        // *next = getRandomValueFromRange(1, arrSize);
+                        *next = cnt;
+                        cnt++;
+                    } 
+                    matrixPrint(arr, N);
+                    Sleep(1000);
+
+                    k++;
+                }
+
                 break;
             }
             case 2: {
