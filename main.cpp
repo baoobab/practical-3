@@ -7,6 +7,27 @@ int getRandomValueFromRange(int leftLimit, int rightLimit) {
     return leftLimit + rand() % (rightLimit - leftLimit + 1);
 }
 
+void matrixBlockReplacement(int* blocks[], int* blocksNew[], const int N) {
+    const int distance = (N - 4) / 2;
+    for (int i = 0; i < 4; i++) {
+        for (int *next = blocks[i], *end = blocks[i] + N / 2 - 1, cnt = 1,
+        *next2 = blocksNew[i]; cnt < (N / 2) * (N / 2) - distance; next++, next2++ ) {                       
+            if (next == end) {
+                blocks[i] += N;
+                blocksNew[i] += N;
+
+                *next2 = *next;
+
+                next = blocks[i];
+                next2 = blocksNew[i];
+                end = blocks[i] + N / 2 - 1;
+            }
+            cnt++;
+            if (cnt >= (N / 2) * (N / 2) - distance) break;
+            *next2 = *next;
+        } 
+    }    
+}
 void matrixPrint(int *arr, const int N) {
     for (int *next = arr, *prev = arr, *end = arr + N * N - 1; next <= end; next++) {
         if (next - N == prev) {
@@ -137,27 +158,14 @@ int main() {
 
                 int* blocks[4] = {&arr[0], &arr[N / 2], &arr[N / 2 + N * (N / 2)], &arr[(N * N) / 2]};
                 int* blocksNew[4] = {&arrNew[N / 2], &arrNew[N / 2 + N * (N / 2)], &arrNew[(N * N) / 2], &arrNew[0]};
-
-                for (int i = 0; i < 4; i++) {
-                    for (int *next = blocks[i], *end = blocks[i] + N / 2 - 1, cnt = 1,
-                    *next2 = blocksNew[i]; cnt < (N / 2) * (N / 2) - 1; next++, next2++ ) {                       
-                        if (next == end) {
-                            blocks[i] += N;
-                            blocksNew[i] += N;
-
-                            *next2 = *next;
-
-                            next = blocks[i];
-                            next2 = blocksNew[i];
-                            end = blocks[i] + N / 2 - 1;
-                        }
-                        cnt++;
-                        if (cnt >= (N / 2) * (N / 2) - 1) break;
-                        *next2 = *next;
-                    } 
-                }
-
+                matrixBlockReplacement(blocks, blocksNew, N);
                 matrixPrint(arrNew, N);
+
+                int* blocksy[4] = {&arr[0], &arr[N / 2 + N * (N / 2)], &arr[(N * N) / 2], &arr[N / 2]};
+                int* blocksNewy[4] = {&arrNew[N / 2 + N * (N / 2)], &arrNew[0], &arrNew[N / 2], &arrNew[(N * N) / 2]};
+                matrixBlockReplacement(blocksy, blocksNewy, N);
+                matrixPrint(arrNew, N);
+
                 break;
             }
             case 3: {
