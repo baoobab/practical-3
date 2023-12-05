@@ -66,16 +66,16 @@ int main() {
                         *next = cnt;
                         cnt++;
                     } 
-                    matrixPrint(arr, N);
-                    Sleep(1000);
+                    // matrixPrint(arr, N);
+                    // Sleep(1000);
 
                     for (int *next = upRightCorner + N, *end = downRightCorner; next <= end; next += N) {
                         // *next = getRandomValueFromRange(1, arrSize);
                         *next = cnt;
                         cnt++;
                     }      
-                    matrixPrint(arr, N);
-                    Sleep(1000);
+                    // matrixPrint(arr, N);
+                    // Sleep(1000);
 
                     if (cnt > N * N) break;
 
@@ -84,16 +84,16 @@ int main() {
                         *next = cnt;
                         cnt++;
                     } 
-                    matrixPrint(arr, N);
-                    Sleep(1000);
+                    // matrixPrint(arr, N);
+                    // Sleep(1000);
 
                     for (int *next = downLeftCorner - N, *end = upLeftCorner + N; next >= end; next -= N) {
                         // *next = getRandomValueFromRange(1, arrSize);
                         *next = cnt;
                         cnt++;
                     }      
-                    matrixPrint(arr, N);
-                    Sleep(1000);
+                    // matrixPrint(arr, N);
+                    // Sleep(1000);
 
                     k++;
                 }
@@ -113,8 +113,8 @@ int main() {
                         *next = cnt;
                         cnt++;
                     } 
-                    matrixPrint(arr, N);
-                    Sleep(1000);
+                    // matrixPrint(arr, N);
+                    // Sleep(1000);
 
                     k++;
 
@@ -123,8 +123,8 @@ int main() {
                         *next = cnt;
                         cnt++;
                     } 
-                    matrixPrint(arr, N);
-                    Sleep(1000);
+                    // matrixPrint(arr, N);
+                    // Sleep(1000);
 
                     k++;
                 }
@@ -132,6 +132,32 @@ int main() {
                 break;
             }
             case 2: {
+                cout << "\n" << "2.A)" << "\n";
+                int arrNew[N * N] = {};
+
+                int* blocks[4] = {&arr[0], &arr[N / 2], &arr[N / 2 + N * (N / 2)], &arr[(N * N) / 2]};
+                int* blocksNew[4] = {&arrNew[N / 2], &arrNew[N / 2 + N * (N / 2)], &arrNew[(N * N) / 2], &arrNew[0]};
+
+                for (int i = 0; i < 4; i++) {
+                    for (int *next = blocks[i], *end = blocks[i] + N / 2 - 1, cnt = 1,
+                    *next2 = blocksNew[i]; cnt < (N / 2) * (N / 2) - 1; next++, next2++ ) {                       
+                        if (next == end) {
+                            blocks[i] += N;
+                            blocksNew[i] += N;
+
+                            *next2 = *next;
+
+                            next = blocks[i];
+                            next2 = blocksNew[i];
+                            end = blocks[i] + N / 2 - 1;
+                        }
+                        cnt++;
+                        if (cnt >= (N / 2) * (N / 2) - 1) break;
+                        *next2 = *next;
+                    } 
+                }
+
+                matrixPrint(arrNew, N);
                 break;
             }
             case 3: {
