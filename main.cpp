@@ -153,17 +153,31 @@ int main() {
                 break;
             }
             case 2: {
-                cout << "\n" << "2.A)" << "\n";
                 int arrNew[N * N] = {};
 
-                int* blocks[4] = {&arr[0], &arr[N / 2], &arr[N / 2 + N * (N / 2)], &arr[(N * N) / 2]};
-                int* blocksNew[4] = {&arrNew[N / 2], &arrNew[N / 2 + N * (N / 2)], &arrNew[(N * N) / 2], &arrNew[0]};
-                matrixBlockReplacement(blocks, blocksNew, N);
+                cout << "\n" << "2.A)" << "\n";
+
+                int* blocksA[4] = {&arr[0], &arr[N / 2], &arr[N / 2 + N * (N / 2)], &arr[(N * N) / 2]};
+                int* blocksNewA[4] = {&arrNew[N / 2], &arrNew[N / 2 + N * (N / 2)], &arrNew[(N * N) / 2], &arrNew[0]};
+                matrixBlockReplacement(blocksA, blocksNewA, N);
                 matrixPrint(arrNew, N);
 
-                int* blocksy[4] = {&arr[0], &arr[N / 2 + N * (N / 2)], &arr[(N * N) / 2], &arr[N / 2]};
-                int* blocksNewy[4] = {&arrNew[N / 2 + N * (N / 2)], &arrNew[0], &arrNew[N / 2], &arrNew[(N * N) / 2]};
-                matrixBlockReplacement(blocksy, blocksNewy, N);
+                cout << "\n" << "2.B)" << "\n";
+                int* blocksB[4] = {&arr[0], &arr[N / 2 + N * (N / 2)], &arr[(N * N) / 2], &arr[N / 2]};
+                int* blocksNewB[4] = {&arrNew[N / 2 + N * (N / 2)], &arrNew[0], &arrNew[N / 2], &arrNew[(N * N) / 2]};
+                matrixBlockReplacement(blocksB, blocksNewB, N);
+                matrixPrint(arrNew, N);
+
+                cout << "\n" << "2.C)" << "\n";
+                int* blocksC[4] = {&arr[0], &arr[(N * N) / 2], &arr[N / 2], &arr[N / 2 + N * (N / 2)]};
+                int* blocksNewC[4] = {&arrNew[(N * N) / 2], &arrNew[0], &arrNew[N / 2 + N * (N / 2)], &arrNew[N / 2]};
+                matrixBlockReplacement(blocksC, blocksNewC, N);
+                matrixPrint(arrNew, N);
+
+                cout << "\n" << "2.D)" << "\n";
+                int* blocksD[4] = {&arr[0], &arr[N / 2], &arr[(N * N) / 2], &arr[N / 2 + N * (N / 2)]};
+                int* blocksNewD[4] = {&arrNew[N / 2], &arrNew[0], &arrNew[N / 2 + N * (N / 2)], &arrNew[(N * N) / 2]};
+                matrixBlockReplacement(blocksD, blocksNewD, N);
                 matrixPrint(arrNew, N);
 
                 break;
