@@ -84,68 +84,53 @@ void arrayPrint(int *arr, const int N) {
 }
 
 void bubbleSort(int *arr, const int N) {
-    for (int *i = arr, *end = arr + N - 1; i <= end; i++) {
-        for (int *j = arr, *end = arr + N - 0 - 1; j <= end; j++) {
-            int swap = *j;
-            if (*j > *(j + 1)) {
-                *j = *(j + 1);
-               *(j + 1) = swap;
+    for (int i = 0; i < N - 1; i++) {
+        for (int j = 0; j < N - i - 1; j++) {
+            int swap = *(arr + j);
+            if (*(arr + j) > *(arr + j + 1)) {
+                *(arr + j) = *(arr + j + 1);
+               *(arr + j + 1) = swap;
             }
         } 
     } 
 }
 
-void shakerSort(int *arr, const int N) {
-    for (int *i = arr, *end = arr + N / 2; i <= end; i++) {
-        for (int *j = i, *end = arr + N - 0 - 1; j <= end; j++) {
-            int swap = *j;
-            if (*j > *(j + 1)) {
-                *j = *(j + 1);
-               *(j + 1) = swap;
-            }
-        } 
-    } 
-
-    for (int i = 0; i < N / 2; i++) {
-        for (int j = i; j < N - i - 1; j++) {
-            int swap = arr[j];
-            if (arr[j] > arr[j + 1]) {
-                arr[j] = arr[j + 1];
-                arr[j + 1] = swap;
+void shakerSort(int *arr, int n) {
+    for (int *left = arr, *right = arr + n - 1; left < right;) {
+        for (int *i = left; i < right; i++) {
+            int swap = *i;
+            if (*i > *(i + 1)) {
+                *i = *(i + 1);
+                *(i + 1) = swap;
             }
         }
-
-        for (int j = N - i - 2; j > i; j--) {
-            int swap = arr[j];
-            if (arr[j - 1] > arr[j]) {
-                arr[j] = arr[j - 1];
-                arr[j - 1] = swap;
+        right--;
+        for (int *i = right; i > left; i--) {
+            int swap = *(i - 1);
+            if (*(i - 1) > *i) {
+                *(i - 1) = *i;
+                *i = swap;
             }
         }
-    } 
+        left++;
+    }
 }
 
-// void combSort(int *arr, const int N) {
-// 	float k = 1.247;
-//     float S = N - 1;
-// 	int count = 0;
 
-// 	while (S >= 1)
-// 	{
-// 		for (int *i = arr, *end = i + S; i + S < N; i++)
-// 		{
-// 			if (arr[i] > arr[int(i + S)])
-// 			{
-// 				int swap = arr[int(i + S)];
-// 				arr[int(i + S)] = arr[i];
-// 				arr[i] = swap;
-// 			}
-// 		}
-// 		S /= k;
-// 	}
-
-//     bubbleSort(arr, N);
-// }
+void combSort(int *arr, int N) {
+    float k = 1.247;
+    float S = N - 1;
+    while (S >= 1) {
+        for (int i = 0; i + S < N; i++) {
+            int swap = *(arr + i);
+            if (*(arr + i) > *(arr + i + (int) S)) {
+                *(arr + i) = *(arr + i + (int) S);
+                *(arr + i + (int) S) = swap;
+            }
+        }
+        S /= k;
+    }
+}
 
 void insertSort(int *arr, const int N) {
     int key;
@@ -185,9 +170,6 @@ void insertSort(int *arr, const int N) {
 
 int main() {
     setlocale(LC_ALL, "Russian");
-    int a[5] = {5000,-874,3,2,-1};
-    insertSort(a, 5);
-    arrayPrint(a, 5);
 
     cout << "Navigation:" << "\n"
     << "1) Fill a quadratic integer matrix NxN with random numbers" << "\n"
