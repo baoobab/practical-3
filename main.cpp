@@ -35,7 +35,7 @@ void matrixPrint(int *arr, const int N) {
             cout << "\n";
             prev = next;
         }
-        printf("%02d ", *next);
+        printf("%03d ", *next);
     }    
     cout << "\n\n";
 }
@@ -78,7 +78,7 @@ void matrixOperation(int *arr, const int N, const int operationType, int number 
 
 void arrayPrint(int *arr, const int N) {
     for (int *next = arr, *prev = arr, *end = arr + N - 1; next <= end; next++) {
-        printf("%02d ", *next);
+        printf("%03d ", *next);
     }    
     cout << "\n\n";
 }
@@ -192,7 +192,11 @@ int main() {
         switch (workPoint)
         {   
             case 1: {
-                cout << "1.A)\n";
+                HANDLE hStdout;
+                COORD destCoord;
+                hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
+                destCoord.X = -4;
+
                 matrixFill(arr, N); // clear the matrix (for better visibility of the algorithm)
 
                 int cnt = 1;
@@ -205,44 +209,58 @@ int main() {
                     int *downRightCorner = &arr[N * N - ((k - 1) * N) - 1 - (k - 1)];
 
                     for (int *next = upLeftCorner, *end = upRightCorner; next <= end; next++) {
-                        // *next = getRandomValueFromRange(1, arrSize);
-                        *next = cnt;
+                        *next = getRandomValueFromRange(1, N * N);
+                        int posY = (next - arr) / N;   
+                        destCoord.X += 4;
+                        destCoord.Y = posY;
+                        SetConsoleCursorPosition(hStdout, destCoord);
+                        printf("%03d\r", *next);
+                        cout.flush();
+                        Sleep(200);
                         cnt++;
                     } 
-                    // matrixPrint(arr, N);
-                    // Sleep(1000);
 
                     for (int *next = upRightCorner + N, *end = downRightCorner; next <= end; next += N) {
-                        // *next = getRandomValueFromRange(1, arrSize);
-                        *next = cnt;
+                        *next = getRandomValueFromRange(1, N * N);
+                        int posY = (next - arr) / N;
+                        destCoord.Y = posY;
+                        SetConsoleCursorPosition(hStdout, destCoord);
+                        printf("%03d\r", *next);
+                        cout.flush();
+                        Sleep(200);
                         cnt++;
                     }      
-                    // matrixPrint(arr, N);
-                    // Sleep(1000);
-
-                    if (cnt > N * N) break;
 
                     for (int *next = downRightCorner - 1, *end = downLeftCorner; next >= end; next--) {
-                        // *next = getRandomValueFromRange(1, arrSize);
-                        *next = cnt;
+                        *next = getRandomValueFromRange(1, N * N);
+                        int posY = (next - arr) / N;   
+                        destCoord.X -= 4;
+                        destCoord.Y = posY;
+                        SetConsoleCursorPosition(hStdout, destCoord);
+                        printf("%03d\r", *next);
+                        cout.flush();
+                        Sleep(200);
                         cnt++;
                     } 
-                    // matrixPrint(arr, N);
-                    // Sleep(1000);
 
                     for (int *next = downLeftCorner - N, *end = upLeftCorner + N; next >= end; next -= N) {
-                        // *next = getRandomValueFromRange(1, arrSize);
-                        *next = cnt;
+                        *next = getRandomValueFromRange(1, N * N);
+                        int posY = (next - arr) / N;
+                        destCoord.Y = posY;
+                        SetConsoleCursorPosition(hStdout, destCoord);
+                        printf("%03d\r", *next);
+                        cout.flush();
+                        Sleep(200);
                         cnt++;
                     }      
-                    // matrixPrint(arr, N);
-                    // Sleep(1000);
 
                     k++;
                 }
-                matrixPrint(arr, N);
+                
+                destCoord.X = -4;
+                destCoord.Y += N * N;
+                cout << "\n";
 
-                cout << "1.B)" << "\n";
                 matrixFill(arr, N); // clear the matrix (for better visibility of the algorithm)
 
                 cnt = 1;
@@ -252,27 +270,35 @@ int main() {
                 int *downBorder = &arr[N * N - N + k];
 
                 while (cnt <= N * N) {
+                    destCoord.X += 4;
                     for (int *next = upBorder + k, *end = downBorder + k; next <= end; next += N) {
-                        // *next = getRandomValueFromRange(1, arrSize);
-                        *next = cnt;
+                        *next = getRandomValueFromRange(1, N * N);
+                        int posY = (next - arr) / N;
+                        destCoord.Y = posY;
+                        SetConsoleCursorPosition(hStdout, destCoord);
+                        printf("%03d\r", *next);
+                        cout.flush();
+                        Sleep(200);
                         cnt++;
                     } 
-                    // matrixPrint(arr, N);
-                    // Sleep(1000);
 
                     k++;
+                    destCoord.X += 4;
 
                     for (int *next = downBorder + k, *end = upBorder + k; next >= end; next -= N) {
-                        // *next = getRandomValueFromRange(1, arrSize);
-                        *next = cnt;
+                        *next = getRandomValueFromRange(1, N * N);
+                        int posY = (next - arr) / N;
+                        destCoord.Y = posY;
+                        SetConsoleCursorPosition(hStdout, destCoord);
+                        printf("%03d\r", *next);
+                        cout.flush();
+                        Sleep(200);
                         cnt++;
                     } 
-                    // matrixPrint(arr, N);
-                    // Sleep(1000);
 
                     k++;
                 }
-                matrixPrint(arr, N);
+                for (int i = 0; i < N; i++) cout << "\n";
                 break;
             }
             case 2: {
@@ -328,6 +354,7 @@ int main() {
 
                 matrixOperation(arr, N, operationType, a);
                 matrixPrint(arr, N);
+
                 break;
             }
             case 5: {
