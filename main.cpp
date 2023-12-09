@@ -161,7 +161,7 @@ int main() {
     cout << "Navigation:" << "\n"
     << "1) Fill a quadratic integer matrix NxN with random numbers" << "\n"
     << "2) Obtains a new matrix from the matrix of (1), rearranging its blocks" << "\n"
-    << "3) Using pointer arithmetic, sorts elements (quick sort algorithm)" << "\n"
+    << "3) Using pointer arithmetic, sorts elements (insert sort algorithm)" << "\n"
     << "4) Decrements, increases, multiplies, or divides all elements of a matrix by <number>" << "\n"
     << "5) IDZ #9" << "\n";
 
@@ -179,15 +179,18 @@ int main() {
         switch (workPoint)
         {   
             case 1: {
+                const int elementSize = 4;
+                int cnt = 1;
+                int k = 1;
+
                 HANDLE hStdout;
                 COORD destCoord;
                 hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
-                destCoord.X = -4;
+                destCoord.X = -elementSize;
 
                 matrixFill(arr, N); // clear the matrix (for better visibility of the algorithm)
 
-                int cnt = 1;
-                int k = 1;
+
 
                 while (cnt <= N * N) {
                     int *upLeftCorner = &arr[(k - 1) * N + (k - 1)]; 
@@ -198,7 +201,7 @@ int main() {
                     for (int *next = upLeftCorner, *end = upRightCorner; next <= end; next++) {
                         *next = getRandomValueFromRange(1, N * N);
                         int posY = (next - arr) / N;   
-                        destCoord.X += 4;
+                        destCoord.X += elementSize;
                         destCoord.Y = posY;
                         SetConsoleCursorPosition(hStdout, destCoord);
                         printf("%03d\r", *next);
@@ -221,7 +224,7 @@ int main() {
                     for (int *next = downRightCorner - 1, *end = downLeftCorner; next >= end; next--) {
                         *next = getRandomValueFromRange(1, N * N);
                         int posY = (next - arr) / N;   
-                        destCoord.X -= 4;
+                        destCoord.X -= elementSize;
                         destCoord.Y = posY;
                         SetConsoleCursorPosition(hStdout, destCoord);
                         printf("%03d\r", *next);
@@ -244,7 +247,7 @@ int main() {
                     k++;
                 }
                 
-                destCoord.X = -4;
+                destCoord.X = -elementSize;
                 destCoord.Y += N * N;
                 cout << "\n";
 
@@ -257,7 +260,7 @@ int main() {
                 int *downBorder = &arr[N * N - N + k];
 
                 while (cnt <= N * N) {
-                    destCoord.X += 4;
+                    destCoord.X += elementSize;
                     for (int *next = upBorder + k, *end = downBorder + k; next <= end; next += N) {
                         *next = getRandomValueFromRange(1, N * N);
                         int posY = (next - arr) / N;
@@ -340,6 +343,9 @@ int main() {
                 break;
             }
             case 3: {
+                insertSort(arr, N);
+                matrixPrint(arr, N);
+
                 break;
             }
             case 4: {                
