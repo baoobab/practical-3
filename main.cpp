@@ -40,10 +40,17 @@ void matrixPrint(int *arr, const int N) {
     cout << "\n\n";
 }
 
-void matrixFill(int *arr, const int N, int number = 0) {
-    for (int *next = arr, *prev = arr, *end = arr + N * N - 1; next <= end; next++) {
-        *next = number;
-    }    
+void matrixFill(int *arr, const int N, const bool isRandom = false, int number = 0) {
+    if (isRandom) {
+        for (int *next = arr, *prev = arr, *end = arr + N * N - 1; next <= end; next++) {
+            *next = getRandomValueFromRange(1, 100);
+        }  
+    }  
+    else {
+        for (int *next = arr, *prev = arr, *end = arr + N * N - 1; next <= end; next++) {
+            *next = number;
+        }  
+    }
 }
 
 void matrixOperation(int *arr, const int N, const int operationType, int number = 0) {
@@ -146,26 +153,6 @@ void insertSort(int *arr, const int N) {
     }
 }
 
-// void quickSort(int *arr, int *start, int *end)
-// {
-// 	int mid;
-// 	int *f = start; 
-// 	int *l = end;
-// 	mid = *((f + l) / 2);
-// 	while (f < l)
-// 	{
-// 		while (arr[f] < mid) f++;
-// 		while (arr[l] > mid) l--;
-// 		if (f <= l)
-// 		{
-// 			swap(arr[f], arr[l]);
-// 			f++;
-// 			l--;
-// 		}
-// 	}
-// 	if (start < l) quickSort(arr, start, l);
-// 	if (f < end) quickSort(arr, f, end);
-// }
 
 
 int main() {
@@ -176,7 +163,7 @@ int main() {
     << "2) Obtains a new matrix from the matrix of (1), rearranging its blocks" << "\n"
     << "3) Using pointer arithmetic, sorts elements (quick sort algorithm)" << "\n"
     << "4) Decrements, increases, multiplies, or divides all elements of a matrix by <number>" << "\n"
-    << "5) IDZ (work in process)" << "\n";
+    << "5) IDZ #9" << "\n";
 
     const int N = 6;
     int arr[N * N] = {};
@@ -358,6 +345,34 @@ int main() {
                 break;
             }
             case 5: {
+                matrixFill(arr, N, true);
+                matrixPrint(arr, N);
+
+                int arrNew[N * N] = {};
+
+                int *starty = &arr[0];
+                int *endy = &arr[N - 1];
+
+                int *startNew = &arrNew[0];
+
+                for (int *next = starty, *end = endy,
+                *next2 = startNew; endy < arr + N * N; next++, next2 += N) {    
+                    if (next == end) {
+                        starty += N;
+                        startNew += 1;
+                        endy = starty + N;
+
+                        *next2 = *next;
+
+                        next = starty;
+                        next2 = startNew;
+                        end = endy;
+                    }
+                    *next2 = *next;
+                }
+
+                matrixPrint(arrNew, N);
+
                 break;
             }
             default: {
