@@ -299,21 +299,42 @@ int main() {
                 matrixPrint(arrNew, N);
 
                 cout << "\n" << "2.B)" << "\n";
-                int* blocksB[4] = {&arr[0], &arr[N / 2 + N * (N / 2)], &arr[(N * N) / 2], &arr[N / 2]};
-                int* blocksNewB[4] = {&arrNew[N / 2 + N * (N / 2)], &arrNew[0], &arrNew[N / 2], &arrNew[(N * N) / 2]};
-                matrixBlockReplacement(blocksB, blocksNewB, N);
+                blocksA[0] = &arr[0];
+                blocksA[1] = &arr[N / 2 + N * (N / 2)];
+                blocksA[2] = &arr[(N * N) / 2];
+                blocksA[3] = &arr[N / 2];
+                blocksNewA[0] = &arrNew[N / 2 + N * (N / 2)];
+                blocksNewA[1] = &arrNew[0];
+                blocksNewA[2] = &arrNew[N / 2];
+                blocksNewA[3] = &arrNew[(N * N) / 2];
+
+                matrixBlockReplacement(blocksA, blocksNewA, N);
                 matrixPrint(arrNew, N);
 
                 cout << "\n" << "2.C)" << "\n";
-                int* blocksC[4] = {&arr[0], &arr[(N * N) / 2], &arr[N / 2], &arr[N / 2 + N * (N / 2)]};
-                int* blocksNewC[4] = {&arrNew[(N * N) / 2], &arrNew[0], &arrNew[N / 2 + N * (N / 2)], &arrNew[N / 2]};
-                matrixBlockReplacement(blocksC, blocksNewC, N);
+                blocksA[0] = &arr[0];
+                blocksA[1] = &arr[(N * N) / 2];
+                blocksA[2] = &arr[N / 2];
+                blocksA[3] = &arr[N / 2 + N * (N / 2)];
+                blocksNewA[0] = &arrNew[(N * N) / 2];
+                blocksNewA[1] = &arrNew[0];
+                blocksNewA[2] = &arrNew[N / 2 + N * (N / 2)];
+                blocksNewA[3] = &arrNew[N / 2];
+
+                matrixBlockReplacement(blocksA, blocksNewA, N);
                 matrixPrint(arrNew, N);
 
                 cout << "\n" << "2.D)" << "\n";
-                int* blocksD[4] = {&arr[0], &arr[N / 2], &arr[(N * N) / 2], &arr[N / 2 + N * (N / 2)]};
-                int* blocksNewD[4] = {&arrNew[N / 2], &arrNew[0], &arrNew[N / 2 + N * (N / 2)], &arrNew[(N * N) / 2]};
-                matrixBlockReplacement(blocksD, blocksNewD, N);
+                blocksA[0] = &arr[0];
+                blocksA[1] = &arr[N / 2];
+                blocksA[2] = &arr[(N * N) / 2];
+                blocksA[3] = &arr[N / 2 + N * (N / 2)];
+                blocksNewA[0] = &arrNew[N / 2];
+                blocksNewA[1] = &arrNew[0];
+                blocksNewA[2] = &arrNew[N / 2 + N * (N / 2)];
+                blocksNewA[3] = &arrNew[(N * N) / 2];
+
+                matrixBlockReplacement(blocksA, blocksNewA, N);
                 matrixPrint(arrNew, N);
 
                 break;
@@ -356,11 +377,11 @@ int main() {
                 int *startNew = &arrNew[0];
 
                 for (int *next = starty, *end = endy,
-                *next2 = startNew; endy < arr + N * N; next++, next2 += N) {    
-                    if (next == end) {
+                *next2 = startNew; endy < arr + N * N; next++, next2 += N) {
+                    if (next == end ) {
                         starty += N;
                         startNew += 1;
-                        endy = starty + N;
+                        endy = starty + N - 1;
 
                         *next2 = *next;
 
@@ -368,6 +389,7 @@ int main() {
                         next2 = startNew;
                         end = endy;
                     }
+                    if (end > arr + N * N) break;
                     *next2 = *next;
                 }
 
