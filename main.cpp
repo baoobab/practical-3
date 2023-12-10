@@ -182,7 +182,7 @@ int main() {
                 const int elementSize = 4;
                 int cnt = 1;
                 int k = 1;
-
+                system("cls");
                 HANDLE hStdout;
                 COORD destCoord;
                 hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -246,6 +246,8 @@ int main() {
 
                     k++;
                 }
+
+                system("cls");
                 
                 destCoord.X = -elementSize;
                 destCoord.Y += N * N;
@@ -365,7 +367,10 @@ int main() {
                     cout << "\n" << "You entered an incorrect value";
                     break;
                 }
-
+                if (operationType == 3 && a == 0) {
+                    cout << "\n" << "Don't divide by zero (please)";
+                    break;
+                }
                 matrixOperation(arr, N, operationType, a);
                 matrixPrint(arr, N);
 
