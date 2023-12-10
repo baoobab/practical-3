@@ -141,7 +141,7 @@ void combSort(int *arr, int N) {
 
 void insertSort(int *arr, const int N) {
     int key;
-    for (int *i = &arr[1], *j = 0, *end = arr + N - 1; i <= end; i++) {
+    for (int *i = &arr[1], *j = 0, *end = arr + N * N - 1; i <= end; i++) {
         key = *i;
         j = i - 1;
 
